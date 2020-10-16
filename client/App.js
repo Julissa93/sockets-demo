@@ -30,14 +30,6 @@ class App extends React.Component {
             <center>
                 <h1>Collaborative Document</h1>
                 <textarea id="txt" type="text" cols="40" rows="5" value={this.state.text} onChange={this.handleChange}/>
-                {/*<ul id="messages">
-                    {
-                        this.state.messages.map((msg, index) => 
-                            <li key={index}>{msg}</li>)
-                    }
-                </ul>
-                <input id="msg" name="msg" />
-                <button type="submit" onClick={this.handleClick}>SEND </button>*/}
             </center>
         )
     }
