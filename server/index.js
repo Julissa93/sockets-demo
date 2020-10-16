@@ -13,13 +13,17 @@ app.get('/', (req, res, next) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
 })
 
+//demo
+//1. npm i socket.io
+//2. set up on "connection" function and console.log when someone connects to server
+//3. 
 io.on('connection', socket => {
     console.log(socket.id, ' has made a persistent connection to the server!')
 
-    socket.on('new-msg-from-client', msg => { 
-        console.log('message: ', msg) 
+    socket.on('new-text-from-client', text => { 
+        //console.log('message: ', text) 
         //show io.broadcast.emit first to show it only sends to everyone else except the sender
         //but we don't want io.broadcast we want it to show up for the sender as well! 
-        io.emit('new-msg-from-server', msg)
+        socket.broadcast.emit('new-text-from-server', text)
     })
 })

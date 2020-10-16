@@ -5,36 +5,39 @@ class App extends React.Component {
     constructor() {
         super()
         this.state = {
-            messages: []
+            text: ''
         }
-        this.handleClick = this.handleClick.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    handleClick(evt) {
+    handleChange(evt) {
         evt.preventDefault()
-        console.log('evt: ', document.getElementById('msg').value)
-        socket.emit('new-msg-from-client', document.getElementById('msg').value)
+        const text = document.getElementById('txt').value
+        console.log('****evt: ', text)
+        socket.emit('new-text-from-client', text)
+        this.setState({text: text})
     }
 
     componentDidMount() {
-        socket.on("new-msg-from-server", msg => {
-            console.log('msg: ', msg)
-            this.setState({messages: [...this.state.messages, msg]})
+        socket.on("new-text-from-server", newText => {
+            console.log('incoming text: ', newText)
+            this.setState({text: newText})
         })
     }
 
     render() {
         return (
             <center>
-                <h1>Chat App</h1>
-                <ul id="messages">
+                <h1>Collaborative Document</h1>
+                <textarea id="txt" type="text" cols="40" rows="5" value={this.state.text} onChange={this.handleChange}/>
+                {/*<ul id="messages">
                     {
                         this.state.messages.map((msg, index) => 
                             <li key={index}>{msg}</li>)
                     }
                 </ul>
                 <input id="msg" name="msg" />
-                <button type="submit" onClick={this.handleClick}>SEND </button>
+                <button type="submit" onClick={this.handleClick}>SEND </button>*/}
             </center>
         )
     }
